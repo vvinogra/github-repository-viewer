@@ -1,0 +1,95 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'com.google.gms.google-services'
+}
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.2"
+
+    defaultConfig {
+        applicationId "com.github.vvinogra.githubrepositoryviewer"
+        minSdkVersion 23
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+
+    // Multi dex
+    implementation "androidx.multidex:multidex:$rootProject.multidex_version"
+
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "androidx.core:core-ktx:$rootProject.android_core_kotlin_version"
+    implementation "androidx.activity:activity-ktx:$rootProject.android_activity_kotlin_version"
+
+    // Paging
+    implementation "androidx.paging:paging-runtime-ktx:$rootProject.paging_version"
+
+    // UI
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation "androidx.appcompat:appcompat:1.2.0"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+    implementation "androidx.constraintlayout:constraintlayout:2.0.4"
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+
+    // Dependency injection
+    api "com.google.dagger:dagger:$rootProject.dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$rootProject.dagger_version"
+    api "com.google.dagger:dagger-android:$rootProject.dagger_version"
+    api "com.google.dagger:dagger-android-support:$rootProject.dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$rootProject.dagger_version"
+
+    // Firebase
+    implementation platform("com.google.firebase:firebase-bom:$rootProject.firebase_version")
+    implementation 'com.google.firebase:firebase-auth-ktx'
+//    implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    // Network
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofit_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava3:$rootProject.retrofit_version"
+    implementation "com.squareup.okhttp3:okhttp:$rootProject.okhttp_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttp_version"
+
+    // Reactive extension
+    implementation "io.reactivex.rxjava3:rxandroid:$rootProject.rxjava3_version"
+    implementation "io.reactivex.rxjava3:rxjava:$rootProject.rxjava3_version"
+
+    // Json formatter
+    implementation "com.google.code.gson:gson:$rootProject.gson_version"
+
+    // Image
+    implementation "com.squareup.picasso:picasso:$rootProject.picasso_version"
+
+    // Logger
+    implementation "com.jakewharton.timber:timber:$rootProject.timber_version"
+
+    // Test
+    testImplementation "junit:junit:4.13.1"
+    androidTestImplementation "androidx.test.ext:junit:1.1.2"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.3.0"
+}
