@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/owner_avatar"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_launcher_foreground" />
+
+    <TextView
+        android:id="@+id/owner_name"
+        style="@style/TextAppearance.AppCompat.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        app:layout_constraintBottom_toBottomOf="@+id/owner_avatar"
+        app:layout_constraintStart_toEndOf="@+id/owner_avatar"
+        app:layout_constraintTop_toTopOf="@+id/owner_avatar"
+        tools:text="Owner" />
+
+    <TextView
+        android:id="@+id/repo_name"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/owner_avatar"
+        app:layout_constraintTop_toBottomOf="@+id/owner_avatar"
+        tools:text="Name" />
+
+    <TextView
+        android:id="@+id/repo_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="@+id/repo_name"
+        app:layout_constraintTop_toBottomOf="@+id/repo_name"
+        tools:text="Description" />
+
+    <TextView
+        android:id="@+id/stargazer_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        tools:text="100" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/repo_description"
+        app:layout_constraintTop_toBottomOf="@+id/repo_description"
+        app:srcCompat="@drawable/ic_baseline_star_outline_24" />
+</androidx.constraintlayout.widget.ConstraintLayout>

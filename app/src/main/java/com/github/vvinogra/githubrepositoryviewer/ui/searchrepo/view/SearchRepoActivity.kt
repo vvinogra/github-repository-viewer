@@ -1,30 +1,51 @@
 package com.github.vvinogra.githubrepositoryviewer.ui.searchrepo.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.ViewModel
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.vvinogra.githubrepositoryviewer.R
+import com.github.vvinogra.githubrepositoryviewer.databinding.ActivitySearchRepoBinding
 import com.github.vvinogra.githubrepositoryviewer.di.viewmodel.DaggerViewModelFactory
+import com.github.vvinogra.githubrepositoryviewer.ui.searchrepo.model.NetworkState
+import com.github.vvinogra.githubrepositoryviewer.ui.searchrepo.viewmodel.SearchRepoViewModel
+import com.github.vvinogra.githubrepositoryviewer.ui.utils.visibleIf
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
 class SearchRepoActivity : AppCompatActivity() {
 
     @Inject lateinit var daggerViewModelFactory: DaggerViewModelFactory
+    @Inject lateinit var repositoryListAdapter: RepositoryListAdapter
 
-    private val searchRepoViewModel: ViewModel by viewModels { daggerViewModelFactory }
+    private val searchRepoViewModel: SearchRepoViewModel by viewModels { daggerViewModelFactory }
+
+    private lateinit var binding: ActivitySearchRepoBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         AndroidInjection.inject(this)
 
-        setContentView(R.layout.activity_search_repo)
+        binding = ActivitySearchRepoBinding.inflate(layoutInflater)
 
-        title = "Search"
+        setContentView(binding.root)
+        setTitle(R.string.search_repo_activity_title)
+
+        binding.repoRecyclerView.run {
+            adapter = repositoryListAdapter
+            layoutManager = LinearLayoutManager(context)
+
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        }
+
+        binding.swipeRefreshRepoList.setOnRefreshListener {
+            searchRepoViewModel.refresh()
+        }
+
+        subscribeEvents()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -36,6 +57,8 @@ class SearchRepoActivity : AppCompatActivity() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
+                searchRepoViewModel.showSearchResults(query)
+
                 if (!searchView.isIconified) {
                     searchView.isIconified = true
                 }
@@ -51,5 +74,18 @@ class SearchRepoActivity : AppCompatActivity() {
         })
 
         return true
+    }
+
+    private fun subscribeEvents() {
+        searchRepoViewModel.repositories.observe(this) {
+            binding.noRepositoriesFound.root.visibleIf(it.isEmpty())
+            binding.repoRecyclerView.visibleIf(it.isNotEmpty())
+
+            repositoryListAdapter.submitList(it)
+        }
+
+        searchRepoViewModel.refreshState.observe(this) {
+            binding.swipeRefreshRepoList.isRefreshing = it == NetworkState.LOADING
+        }
     }
 }
