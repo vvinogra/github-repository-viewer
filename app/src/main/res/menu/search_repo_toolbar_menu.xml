@@ -4,7 +4,13 @@
     <item
         android:id="@+id/action_search"
         android:icon="@drawable/ic_baseline_search_24"
-        android:title="Search"
+        android:title="@string/search_repo_toolbar_search_action"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="collapseActionView|ifRoom"/>
+        app:showAsAction="collapseActionView|ifRoom" />
+
+    <item
+        android:id="@+id/action_history"
+        android:icon="@drawable/ic_baseline_history_24"
+        android:title="@string/search_repo_toolbar_history_action"
+        app:showAsAction="ifRoom" />
 </menu>

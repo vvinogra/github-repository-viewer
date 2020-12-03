@@ -1,4 +1,4 @@
-package com.github.vvinogra.githubrepositoryviewer.ui.searchrepo.model
+package com.github.vvinogra.githubrepositoryviewer.ui.domain
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
@@ -23,10 +23,10 @@ class SearchRepoDataSource(
         params: LoadInitialParams<Int>,
         callback: LoadInitialCallback<Int, Repository>
     ) {
-        val currentPage = 0
-        val nextPage = currentPage + 1
+        val firstPage = 1
+        val nextPage = firstPage + 1
 
-        api.searchRepositories(searchQuery, currentPage, SIZE_PER_REQUEST)
+        api.searchRepositories(searchQuery, firstPage, SIZE_PER_REQUEST)
             .zipWith(api.searchRepositories(searchQuery, nextPage, SIZE_PER_REQUEST),
                 { firstResult: SearchRepoResponse, secondResult: SearchRepoResponse ->
                     firstResult.items + secondResult.items

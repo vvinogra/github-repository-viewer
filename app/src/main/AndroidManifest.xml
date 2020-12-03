@@ -12,16 +12,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GithubRepositoryViewer">
-        <activity android:name=".ui.searchrepo.view.SearchRepoActivity">
 
+        <activity
+            android:name=".ui.repohistory.view.RepoHistoryActivity"
+            android:parentActivityName=".ui.searchrepo.view.SearchRepoActivity" />
+
+        <activity android:name=".ui.searchrepo.view.SearchRepoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-        <activity android:name=".ui.MainActivity"></activity>
     </application>
 
 </manifest>

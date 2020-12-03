@@ -2,4 +2,8 @@
     <string name="app_name">GithubRepositoryViewer</string>
     <string name="search_repo_activity_title">Search</string>
     <string name="no_repositories_found_title">We couldn’t find any repositories matching your query</string>
+    <string name="empty_repo_history_title">No recorded history</string>
+    <string name="search_repo_toolbar_search_action">Search</string>
+    <string name="search_repo_toolbar_history_action">History</string>
+    <string name="repo_history_activity_title">History</string>
 </resources>

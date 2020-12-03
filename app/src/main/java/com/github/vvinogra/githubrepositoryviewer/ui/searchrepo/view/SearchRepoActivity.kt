@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -12,7 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.vvinogra.githubrepositoryviewer.R
 import com.github.vvinogra.githubrepositoryviewer.databinding.ActivitySearchRepoBinding
 import com.github.vvinogra.githubrepositoryviewer.di.viewmodel.DaggerViewModelFactory
-import com.github.vvinogra.githubrepositoryviewer.ui.searchrepo.model.NetworkState
+import com.github.vvinogra.githubrepositoryviewer.ui.repohistory.view.RepoHistoryActivity
+import com.github.vvinogra.githubrepositoryviewer.ui.domain.NetworkState
 import com.github.vvinogra.githubrepositoryviewer.ui.searchrepo.presentation.RepositoryPresentation
 import com.github.vvinogra.githubrepositoryviewer.ui.searchrepo.viewmodel.SearchRepoViewModel
 import com.github.vvinogra.githubrepositoryviewer.ui.utils.EventObserver
@@ -22,8 +24,11 @@ import javax.inject.Inject
 
 class SearchRepoActivity : AppCompatActivity() {
 
-    @Inject lateinit var daggerViewModelFactory: DaggerViewModelFactory
-    @Inject lateinit var repositoryListAdapter: RepositoryListAdapter
+    @Inject
+    lateinit var daggerViewModelFactory: DaggerViewModelFactory
+
+    @Inject
+    lateinit var repositoryListAdapter: RepositoryListAdapter
 
     private val searchRepoViewModel: SearchRepoViewModel by viewModels { daggerViewModelFactory }
 
@@ -84,6 +89,18 @@ class SearchRepoActivity : AppCompatActivity() {
         return true
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_history -> {
+                showRepoHistory()
+                return true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
+        }
+    }
+
     private fun subscribeEvents() {
         searchRepoViewModel.repositories.observe(this) {
             binding.noRepositoriesFound.root.visibleIf(it.isEmpty())
@@ -99,6 +116,12 @@ class SearchRepoActivity : AppCompatActivity() {
         searchRepoViewModel.itemSelectedEvent.observe(this, EventObserver {
             openRepository(it)
         })
+    }
+
+    private fun showRepoHistory() {
+        val historyPageIntent = Intent(this, RepoHistoryActivity::class.java)
+
+        startActivity(historyPageIntent)
     }
 
     private fun openRepository(repositoryPresentation: RepositoryPresentation) {

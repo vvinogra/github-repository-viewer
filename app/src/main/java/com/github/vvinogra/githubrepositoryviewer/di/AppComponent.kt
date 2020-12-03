@@ -5,6 +5,7 @@ import com.github.vvinogra.githubrepositoryviewer.AppDelegate
 import com.github.vvinogra.githubrepositoryviewer.di.modules.ActivityInjectionModule
 import com.github.vvinogra.githubrepositoryviewer.di.modules.ImageModule
 import com.github.vvinogra.githubrepositoryviewer.di.modules.NetworkModule
+import com.github.vvinogra.githubrepositoryviewer.di.modules.RoomModule
 import com.github.vvinogra.githubrepositoryviewer.di.viewmodel.ViewModelModule
 import dagger.BindsInstance
 import dagger.Component
@@ -17,6 +18,7 @@ import javax.inject.Singleton
     ActivityInjectionModule::class,
     NetworkModule::class,
     ImageModule::class,
+    RoomModule::class,
     ViewModelModule::class
 ])
 interface AppComponent {

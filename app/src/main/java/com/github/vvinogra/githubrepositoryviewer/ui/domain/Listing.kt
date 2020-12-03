@@ -1,4 +1,4 @@
-package com.github.vvinogra.githubrepositoryviewer.ui.searchrepo.model
+package com.github.vvinogra.githubrepositoryviewer.ui.domain
 
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList

@@ -10,7 +10,6 @@ import com.github.vvinogra.githubrepositoryviewer.ui.searchrepo.presentation.Rep
 import com.squareup.picasso.Picasso
 import javax.inject.Inject
 
-
 class RepositoryListAdapter @Inject constructor(
     private val picasso: Picasso
 ): PagedListAdapter<RepositoryPresentation, RepositoryListAdapter.RepositoryListViewHolder>(DIFF_CALLBACK) {

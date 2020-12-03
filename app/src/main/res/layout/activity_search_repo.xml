@@ -23,7 +23,8 @@
             <include
                 android:id="@+id/no_repositories_found"
                 layout="@layout/no_repositories_found_view"
-                android:visibility="gone" />
+                android:visibility="gone"
+                tools:visibility="visible" />
 
         </FrameLayout>
 

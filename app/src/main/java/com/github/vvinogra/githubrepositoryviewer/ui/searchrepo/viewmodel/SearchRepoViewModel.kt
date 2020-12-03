@@ -5,26 +5,33 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
-import com.github.vvinogra.githubrepositoryviewer.ui.searchrepo.model.Listing
-import com.github.vvinogra.githubrepositoryviewer.ui.searchrepo.model.NetworkState
-import com.github.vvinogra.githubrepositoryviewer.ui.searchrepo.model.SearchRepoModel
+import com.github.vvinogra.githubrepositoryviewer.data.utils.RxSchedulers
+import com.github.vvinogra.githubrepositoryviewer.ui.domain.Listing
+import com.github.vvinogra.githubrepositoryviewer.ui.domain.NetworkState
+import com.github.vvinogra.githubrepositoryviewer.ui.domain.RepositoryDomain
 import com.github.vvinogra.githubrepositoryviewer.ui.searchrepo.presentation.RepositoryPresentation
 import com.github.vvinogra.githubrepositoryviewer.ui.utils.Event
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import javax.inject.Inject
 
 class SearchRepoViewModel @Inject constructor(
-    private val searchRepoModel: SearchRepoModel
-): ViewModel() {
+    private val repositoryDomain: RepositoryDomain,
+    private val rxSchedulers: RxSchedulers
+) : ViewModel() {
+
+    private val compositeDisposable = CompositeDisposable()
 
     private val queryText = MutableLiveData<String>()
 
-    private val itemListing: LiveData<Listing<RepositoryPresentation>> = Transformations.map(queryText) {
-        searchRepoModel.searchRepo(it)
-    }
+    private val itemListing: LiveData<Listing<RepositoryPresentation>> =
+        Transformations.map(queryText) {
+            repositoryDomain.searchRepositories(it)
+        }
 
-    val repositories: LiveData<PagedList<RepositoryPresentation>> = Transformations.switchMap(itemListing) {
-        it.pagedList
-    }
+    val repositories: LiveData<PagedList<RepositoryPresentation>> =
+        Transformations.switchMap(itemListing) {
+            it.pagedList
+        }
 
     val refreshState: LiveData<NetworkState> = Transformations.switchMap(itemListing) {
         it.refreshState
@@ -33,7 +40,20 @@ class SearchRepoViewModel @Inject constructor(
     private val _itemSelected = MutableLiveData<Event<RepositoryPresentation>>()
     val itemSelectedEvent: LiveData<Event<RepositoryPresentation>> = _itemSelected
 
+    override fun onCleared() {
+        super.onCleared()
+
+        compositeDisposable.dispose()
+    }
+
     fun selectItem(item: RepositoryPresentation) {
+        compositeDisposable.add(
+            repositoryDomain.addItemToHistory(item)
+                .subscribeOn(rxSchedulers.io())
+                .observeOn(rxSchedulers.main())
+                .subscribe({}, {})
+        )
+
         _itemSelected.value = Event(item)
     }
 
