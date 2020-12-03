@@ -1,5 +1,7 @@
 package com.github.vvinogra.githubrepositoryviewer.ui.searchrepo.view
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import androidx.activity.viewModels
@@ -11,7 +13,9 @@ import com.github.vvinogra.githubrepositoryviewer.R
 import com.github.vvinogra.githubrepositoryviewer.databinding.ActivitySearchRepoBinding
 import com.github.vvinogra.githubrepositoryviewer.di.viewmodel.DaggerViewModelFactory
 import com.github.vvinogra.githubrepositoryviewer.ui.searchrepo.model.NetworkState
+import com.github.vvinogra.githubrepositoryviewer.ui.searchrepo.presentation.RepositoryPresentation
 import com.github.vvinogra.githubrepositoryviewer.ui.searchrepo.viewmodel.SearchRepoViewModel
+import com.github.vvinogra.githubrepositoryviewer.ui.utils.EventObserver
 import com.github.vvinogra.githubrepositoryviewer.ui.utils.visibleIf
 import dagger.android.AndroidInjection
 import javax.inject.Inject
@@ -33,6 +37,10 @@ class SearchRepoActivity : AppCompatActivity() {
 
         setContentView(binding.root)
         setTitle(R.string.search_repo_activity_title)
+
+        repositoryListAdapter.onItemClickListener = {
+            searchRepoViewModel.selectItem(it)
+        }
 
         binding.repoRecyclerView.run {
             adapter = repositoryListAdapter
@@ -87,5 +95,17 @@ class SearchRepoActivity : AppCompatActivity() {
         searchRepoViewModel.refreshState.observe(this) {
             binding.swipeRefreshRepoList.isRefreshing = it == NetworkState.LOADING
         }
+
+        searchRepoViewModel.itemSelectedEvent.observe(this, EventObserver {
+            openRepository(it)
+        })
+    }
+
+    private fun openRepository(repositoryPresentation: RepositoryPresentation) {
+        val repoWebUri = Uri.parse(repositoryPresentation.webPageUrl)
+
+        val browserIntent = Intent(Intent.ACTION_VIEW, repoWebUri)
+
+        startActivity(browserIntent)
     }
 }

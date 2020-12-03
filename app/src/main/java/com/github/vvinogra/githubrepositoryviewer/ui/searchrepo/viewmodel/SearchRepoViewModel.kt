@@ -9,7 +9,7 @@ import com.github.vvinogra.githubrepositoryviewer.ui.searchrepo.model.Listing
 import com.github.vvinogra.githubrepositoryviewer.ui.searchrepo.model.NetworkState
 import com.github.vvinogra.githubrepositoryviewer.ui.searchrepo.model.SearchRepoModel
 import com.github.vvinogra.githubrepositoryviewer.ui.searchrepo.presentation.RepositoryPresentation
-import com.github.vvinogra.githubviewer.data.network.model.Repository
+import com.github.vvinogra.githubrepositoryviewer.ui.utils.Event
 import javax.inject.Inject
 
 class SearchRepoViewModel @Inject constructor(
@@ -28,6 +28,13 @@ class SearchRepoViewModel @Inject constructor(
 
     val refreshState: LiveData<NetworkState> = Transformations.switchMap(itemListing) {
         it.refreshState
+    }
+
+    private val _itemSelected = MutableLiveData<Event<RepositoryPresentation>>()
+    val itemSelectedEvent: LiveData<Event<RepositoryPresentation>> = _itemSelected
+
+    fun selectItem(item: RepositoryPresentation) {
+        _itemSelected.value = Event(item)
     }
 
     fun refresh() {

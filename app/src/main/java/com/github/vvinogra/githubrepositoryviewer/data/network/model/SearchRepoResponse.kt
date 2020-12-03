@@ -1,6 +1,5 @@
 package com.github.vvinogra.githubrepositoryviewer.data.network.model
 
-import com.github.vvinogra.githubviewer.data.network.model.Repository
 import com.google.gson.annotations.SerializedName
 
 data class SearchRepoResponse(

@@ -11,14 +11,11 @@ import javax.inject.Inject
 class SearchRepoModel @Inject constructor(
     private val api: GithubApi
 ) {
-    companion object {
-        private const val PAGE_SIZE = 15
-    }
 
     fun searchRepo(query: String): Listing<RepositoryPresentation> {
         val config = PagedList.Config.Builder()
-            .setInitialLoadSizeHint(PAGE_SIZE)
-            .setPageSize(PAGE_SIZE)
+            .setInitialLoadSizeHint(SearchRepoDataSource.PAGE_SIZE)
+            .setPageSize(SearchRepoDataSource.PAGE_SIZE)
             .build()
 
         val factory = SearchRepoDataSource.SearchRepoDataSourceFactory(api, query)

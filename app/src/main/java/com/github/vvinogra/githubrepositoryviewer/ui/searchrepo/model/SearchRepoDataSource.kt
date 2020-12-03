@@ -5,12 +5,17 @@ import androidx.paging.DataSource
 import androidx.paging.PageKeyedDataSource
 import com.github.vvinogra.githubrepositoryviewer.data.network.model.SearchRepoResponse
 import com.github.vvinogra.githubrepositoryviewer.data.network.retrofit.GithubApi
-import com.github.vvinogra.githubviewer.data.network.model.Repository
+import com.github.vvinogra.githubrepositoryviewer.data.network.model.Repository
 
 class SearchRepoDataSource(
     private val api: GithubApi,
     private val searchQuery: String
 ) : PageKeyedDataSource<Int, Repository>() {
+
+    companion object {
+        const val PAGE_SIZE = 30
+        const val SIZE_PER_REQUEST = PAGE_SIZE / 2
+    }
 
     val initialState = MutableLiveData<NetworkState>()
 
@@ -21,12 +26,11 @@ class SearchRepoDataSource(
         val currentPage = 0
         val nextPage = currentPage + 1
 
-        api.searchRepositories(searchQuery, currentPage, params.requestedLoadSize)
-            .zipWith(api.searchRepositories(searchQuery, nextPage, params.requestedLoadSize),
+        api.searchRepositories(searchQuery, currentPage, SIZE_PER_REQUEST)
+            .zipWith(api.searchRepositories(searchQuery, nextPage, SIZE_PER_REQUEST),
                 { firstResult: SearchRepoResponse, secondResult: SearchRepoResponse ->
                     firstResult.items + secondResult.items
-                }
-            )
+                })
             .doOnSubscribe {
                 initialState.postValue(NetworkState.LOADING)
             }
@@ -43,8 +47,8 @@ class SearchRepoDataSource(
         val currentPage = params.key
         val nextPage = currentPage + 1
 
-        api.searchRepositories(searchQuery, currentPage, params.requestedLoadSize)
-            .zipWith(api.searchRepositories(searchQuery, nextPage, params.requestedLoadSize),
+        api.searchRepositories(searchQuery, currentPage, SIZE_PER_REQUEST)
+            .zipWith(api.searchRepositories(searchQuery, nextPage, SIZE_PER_REQUEST),
                 { firstResult: SearchRepoResponse, secondResult: SearchRepoResponse ->
                     firstResult.items + secondResult.items
                 })

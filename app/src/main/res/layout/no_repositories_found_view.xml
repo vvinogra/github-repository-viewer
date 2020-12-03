@@ -19,9 +19,10 @@
         android:id="@+id/no_repositories_found_image"
         android:layout_width="96dp"
         android:layout_height="96dp"
-        android:layout_marginTop="168dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.25"
         app:srcCompat="@drawable/ic_baseline_search_24" />
 </androidx.constraintlayout.widget.ConstraintLayout>

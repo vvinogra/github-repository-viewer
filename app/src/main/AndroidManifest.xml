@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.github.vvinogra.githubrepositoryviewer">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".AppDelegate"
         android:allowBackup="true"
@@ -19,8 +21,7 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".ui.MainActivity">
-        </activity>
+        <activity android:name=".ui.MainActivity"></activity>
     </application>
 
 </manifest>
