@@ -6,7 +6,7 @@ data class SearchRepoResponse(
     @SerializedName("incomplete_results")
     val incompleteResults: Boolean,
     @SerializedName("items")
-    val items: List<Repository>,
+    val items: List<RepositoryResponse>,
     @SerializedName("total_count")
     val totalCount: Int
 )

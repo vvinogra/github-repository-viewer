@@ -12,12 +12,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GithubRepositoryViewer">
-
+        <activity android:name=".ui.repohistory.RepoHistoryActivity" />
+        <activity android:name=".ui.searchrepo.SearchRepoActivity" />
         <activity
-            android:name=".ui.repohistory.view.RepoHistoryActivity"
-            android:parentActivityName=".ui.searchrepo.view.SearchRepoActivity" />
+            android:name=".ui.login.LoginActivity"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
-        <activity android:name=".ui.searchrepo.view.SearchRepoActivity">
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="com.github.vvinogra.githubrepositoryviewer.login"
+                    android:scheme="githubrepositoryviewer" />
+            </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

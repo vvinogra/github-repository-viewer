@@ -6,11 +6,15 @@
         android:icon="@drawable/ic_baseline_search_24"
         android:title="@string/search_repo_toolbar_search_action"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="collapseActionView|ifRoom" />
+        app:showAsAction="collapseActionView|always" />
 
     <item
         android:id="@+id/action_history"
-        android:icon="@drawable/ic_baseline_history_24"
         android:title="@string/search_repo_toolbar_history_action"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_logout"
+        android:title="@string/search_repo_toolbar_logout_action"
+        app:showAsAction="never" />
 </menu>

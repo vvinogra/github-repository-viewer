@@ -1,9 +1,12 @@
 <resources>
-    <string name="app_name">GithubRepositoryViewer</string>
+    <string name="app_name">Repository Viewer</string>
     <string name="search_repo_activity_title">Search</string>
     <string name="no_repositories_found_title">We couldn’t find any repositories matching your query</string>
     <string name="empty_repo_history_title">No recorded history</string>
     <string name="search_repo_toolbar_search_action">Search</string>
     <string name="search_repo_toolbar_history_action">History</string>
     <string name="repo_history_activity_title">History</string>
+    <string name="sign_in_btn_text">Sign in</string>
+    <string name="login_activity_title">Sign in</string>
+    <string name="search_repo_toolbar_logout_action">Logout</string>
 </resources>

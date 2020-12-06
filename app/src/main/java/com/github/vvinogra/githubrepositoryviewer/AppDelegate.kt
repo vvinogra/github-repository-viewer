@@ -2,6 +2,7 @@ package com.github.vvinogra.githubrepositoryviewer
 
 import androidx.multidex.MultiDexApplication
 import com.github.vvinogra.githubrepositoryviewer.di.DaggerAppComponent
+import com.github.vvinogra.githubrepositoryviewer.ui.login.LoginStateManager
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
@@ -14,6 +15,9 @@ class AppDelegate : MultiDexApplication(), HasAndroidInjector {
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
 
+    @Inject
+    lateinit var loginStateManager: LoginStateManager
+
     override fun onCreate() {
         super.onCreate()
 
@@ -25,6 +29,8 @@ class AppDelegate : MultiDexApplication(), HasAndroidInjector {
             .application(this)
             .build()
             .inject(this)
+
+        loginStateManager.initialize()
     }
 
     override fun androidInjector(): AndroidInjector<Any?> {

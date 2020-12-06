@@ -1,8 +1,11 @@
 package com.github.vvinogra.githubrepositoryviewer.di.modules
 
 import com.github.vvinogra.githubrepositoryviewer.BuildConfig
+import com.github.vvinogra.githubrepositoryviewer.data.network.NetworkConstants
+import com.github.vvinogra.githubrepositoryviewer.data.authorization.AuthorizationInterceptor
 import com.github.vvinogra.githubrepositoryviewer.data.network.retrofit.GithubApi
-import com.github.vvinogra.githubrepositoryviewer.data.network.retrofit.GithubVersionApiInterceptor
+import com.github.vvinogra.githubrepositoryviewer.data.network.retrofit.ApiGithubVersionInterceptor
+import com.github.vvinogra.githubrepositoryviewer.data.authorization.LogoutAuthenticator
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -19,10 +22,16 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideOkHttpClient(): OkHttpClient {
+    fun provideOkHttpClient(
+        authorizationInterceptor: AuthorizationInterceptor,
+        apiGithubVersionInterceptor: ApiGithubVersionInterceptor,
+        logoutAuthenticator: LogoutAuthenticator
+    ): OkHttpClient {
         val builder = OkHttpClient.Builder()
 
-        builder.addInterceptor(GithubVersionApiInterceptor())
+        builder.addInterceptor(apiGithubVersionInterceptor)
+        builder.addInterceptor(authorizationInterceptor)
+        builder.authenticator(logoutAuthenticator)
 
         if (BuildConfig.DEBUG) {
             builder.addInterceptor(
@@ -44,7 +53,7 @@ object NetworkModule {
     fun provideRetrofit(client: OkHttpClient, gson: Gson): Retrofit {
         return Retrofit.Builder()
             .client(client)
-            .baseUrl("https://api.github.com")
+            .baseUrl(NetworkConstants.BASE_GITHUB_API_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .build()

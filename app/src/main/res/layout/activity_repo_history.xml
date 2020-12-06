@@ -1,19 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container_toolbar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.repohistory.view.RepoHistoryActivity">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/repo_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    android:orientation="vertical"
+    tools:context=".ui.repohistory.RepoHistoryActivity">
 
     <include
-        android:id="@+id/empty_repo_history"
-        layout="@layout/empty_repo_history_view"
-        android:visibility="gone"
-        tools:visibility="visible" />
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
 
-</FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/repo_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <include
+            android:id="@+id/empty_repo_history"
+            layout="@layout/empty_repo_history_view"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+    </FrameLayout>
+
+</LinearLayout>

@@ -2,7 +2,6 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
-    id 'com.google.gms.google-services'
 }
 
 android {
@@ -56,12 +55,12 @@ dependencies {
     implementation "androidx.room:room-rxjava3:$rootProject.room_version"
 
     // UI
-    implementation 'com.google.android.material:material:1.2.1'
-    implementation "androidx.appcompat:appcompat:1.2.0"
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
-    implementation "androidx.constraintlayout:constraintlayout:2.0.4"
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation "com.google.android.material:material:$rootProject.material_version"
+    implementation "androidx.appcompat:appcompat:$rootProject.appcompat_version"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$rootProject.swipe_refresh_layout_version"
+    implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraint_layout_version"
+    implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerview_version"
+    implementation "androidx.cardview:cardview:$rootProject.cardview_version"
 
     // Dependency injection
     api "com.google.dagger:dagger:$rootProject.dagger_version"
@@ -69,11 +68,6 @@ dependencies {
     api "com.google.dagger:dagger-android:$rootProject.dagger_version"
     api "com.google.dagger:dagger-android-support:$rootProject.dagger_version"
     kapt "com.google.dagger:dagger-android-processor:$rootProject.dagger_version"
-
-    // Firebase
-    implementation platform("com.google.firebase:firebase-bom:$rootProject.firebase_version")
-    implementation 'com.google.firebase:firebase-auth-ktx'
-//    implementation 'com.google.firebase:firebase-analytics-ktx'
 
     // Network
     implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofit_version"
@@ -96,7 +90,7 @@ dependencies {
     implementation "com.jakewharton.timber:timber:$rootProject.timber_version"
 
     // Test
-    testImplementation "junit:junit:4.13.1"
-    androidTestImplementation "androidx.test.ext:junit:1.1.2"
-    androidTestImplementation "androidx.test.espresso:espresso-core:3.3.0"
+    testImplementation "junit:junit:$rootProject.junit_version"
+    androidTestImplementation "androidx.test.ext:junit:$rootProject.junit_ext_version"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espresso_core_version"
 }
