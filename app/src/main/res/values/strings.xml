@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Repository Viewer</string>
+    <string name="app_name">Github Repository Viewer</string>
     <string name="search_repo_activity_title">Search</string>
     <string name="no_repositories_found_title">We couldn’t find any repositories matching your query</string>
     <string name="empty_repo_history_title">No recorded history</string>
