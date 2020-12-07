@@ -72,7 +72,7 @@ class SearchRepoActivity : AppCompatActivity() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                searchRepoViewModel.showSearchResults(query)
+                searchRepositories(query)
 
                 if (!searchView.isIconified) {
                     searchView.isIconified = true
@@ -129,6 +129,12 @@ class SearchRepoActivity : AppCompatActivity() {
         searchRepoViewModel.itemSelectedEvent.observe(this, EventObserver {
             openRepository(it)
         })
+    }
+
+    private fun searchRepositories(query: String) {
+        query.trim().takeIf { it.isNotEmpty() }?.let {
+            searchRepoViewModel.showSearchResults(it)
+        }
     }
 
     private fun showRepoHistory() {

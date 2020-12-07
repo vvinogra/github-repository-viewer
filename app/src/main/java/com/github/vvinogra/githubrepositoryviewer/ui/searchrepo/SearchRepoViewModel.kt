@@ -21,6 +21,10 @@ class SearchRepoViewModel @Inject constructor(
     private val rxSchedulers: RxSchedulers
 ) : ViewModel() {
 
+    companion object {
+        private const val DEFAULT_SEARCH_QUERY = "google"
+    }
+
     private val compositeDisposable = CompositeDisposable()
 
     private val queryText = MutableLiveData<String>()
@@ -45,6 +49,10 @@ class SearchRepoViewModel @Inject constructor(
 
     private val _itemSelected = MutableLiveData<Event<Repository>>()
     val itemSelectedEvent: LiveData<Event<Repository>> = _itemSelected
+
+    init {
+        showSearchResults(DEFAULT_SEARCH_QUERY)
+    }
 
     override fun onCleared() {
         super.onCleared()
