@@ -63,7 +63,7 @@ dependencies {
     implementation "androidx.cardview:cardview:$rootProject.cardview_version"
 
     // Browser
-    implementation "androidx.browser.customtabs:customtabs:$rootProject.customtabs_version"
+    implementation "androidx.browser:browser:$rootProject.customtabs_version"
 
     // Dependency injection
     api "com.google.dagger:dagger:$rootProject.dagger_version"

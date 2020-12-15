@@ -5,6 +5,8 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.browser.customtabs.CustomTabColorSchemeParams
+import androidx.browser.customtabs.CustomTabsIntent
 import com.github.vvinogra.githubrepositoryviewer.R
 import com.github.vvinogra.githubrepositoryviewer.data.network.NetworkConstants
 import com.github.vvinogra.githubrepositoryviewer.databinding.ActivityLoginBinding
@@ -77,8 +79,16 @@ class LoginActivity : AppCompatActivity() {
                 NetworkConstants.APP_CLIENT_ID
             ).build()
 
-        val intent = Intent(Intent.ACTION_VIEW, uri)
+        val customTabsIntent: CustomTabsIntent = CustomTabsIntent.Builder().run {
+            val toolbarColor = CustomTabColorSchemeParams.Builder()
+                .setToolbarColor(getColor(R.color.primaryColor))
+                .build()
 
-        startActivity(intent)
+            setDefaultColorSchemeParams(toolbarColor)
+
+            build()
+        }
+
+        customTabsIntent.launchUrl(this, uri)
     }
 }
