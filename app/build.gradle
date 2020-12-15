@@ -62,6 +62,9 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerview_version"
     implementation "androidx.cardview:cardview:$rootProject.cardview_version"
 
+    // Browser
+    implementation "androidx.browser.customtabs:customtabs:$rootProject.customtabs_version"
+
     // Dependency injection
     api "com.google.dagger:dagger:$rootProject.dagger_version"
     kapt "com.google.dagger:dagger-compiler:$rootProject.dagger_version"
